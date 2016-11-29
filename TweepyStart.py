@@ -90,7 +90,6 @@ def GetTweets(user_handle):
     return MyDataFrame
 
 
-#print GetTweets('harsha1007')
 
 app = Flask(__name__)
 
