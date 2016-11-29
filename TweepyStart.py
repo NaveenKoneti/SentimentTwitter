@@ -10,17 +10,17 @@ from flask import *
 
 
 
-consumer_key = 'YbC8FWCm2u3Lu23hJDUXR1rwq'
-consumer_secret = 'TbmhJfpni4WAFZMi1ElzY9SabxpuXVxGwAPyxERBwQkl6hKSfr'
-access_token = '727365650998525952-MZ3fvLzuHGvmmMSc3rT6bNriuuZuTwk'
-access_secret = 'bPYxlbS5dncka6iNH6CNlgEmtm0JTiYtstArSAAWxschD'
+consumer_key = 'Enter Your consumer key'
+consumer_secret = 'Enter Your Consumer Secret'
+access_token = 'Enter Your Access Token'
+access_secret = 'Enter Your Access Secret'
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 
 api = tweepy.API(auth)
 
-Data = pd.read_csv("C:\Users\dobi\PycharmProjects\TwitterPractice\Sentiment_Analysis_Dataset_Updated.csv")
+Data = pd.read_csv("Sentiment_Analysis_Dataset_Updated.csv")
 
 positiveData = Data.loc[Data.Sentiment == 'positive'][:20000]
 negativeData = Data.loc[Data.Sentiment == 'negative'][:20000]
