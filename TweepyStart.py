@@ -10,17 +10,17 @@ from flask import *
 
 
 
-consumer_key = 'Enter Your consumer key'
-consumer_secret = 'Enter Your Consumer Secret'
-access_token = 'Enter Your Access Token'
-access_secret = 'Enter Your Access Secret'
+consumer_key = 'Enter consumer Key'
+consumer_secret = 'Enter consumer Secret'
+access_token = 'Enter Access Token'
+access_secret = 'Enter Access Secret'
 
 auth = OAuthHandler(consumer_key, consumer_secret)
 auth.set_access_token(access_token, access_secret)
 
 api = tweepy.API(auth)
 
-Data = pd.read_csv("Sentiment_Analysis_Dataset_Updated1.csv")
+Data = pd.read_csv("C:\Users\dobi\PycharmProjects\TwitterPractice\Sentiment_Analysis_Dataset_Updated.csv")
 
 positiveData = Data.loc[Data.Sentiment == 'positive'][:20000]
 negativeData = Data.loc[Data.Sentiment == 'negative'][:20000]
@@ -90,21 +90,36 @@ def GetTweets(user_handle):
     return MyDataFrame
 
 
-
 app = Flask(__name__)
 
 @app.route('/')
 def home():
-    return render_template('index.html')
+    return render_template('index1.html')
 
 @app.route('/sentiment',methods=['POST'])
 def sentiment():
     user=request.form['user']
     data=GetTweets(user)
-
     return render_template("sentiment.html", data=data.to_html())
 
+@app.route('/TextSentiment', methods=['POST'])
+def TextSentiment():
+    Text = request.form['Text']
+    wordsPos = Text.split()
+    NoApos = ' '.join(wordsPos).replace("'re", " are").replace("'s", " is").replace("n't", " not").replace("'d",
+                                                                                                           " had").replace(
+        "'ll", " will").replace("'m", " am").replace("'ve", " have")
+    NoApos = NoApos.translate(string.punctuation)
+    NoApos = ''.join(''.join(s)[:2] for _, s in itertools.groupby(NoApos))
+    NoApos = re.sub(r"http\S+", "", NoApos)
+    TextPrediction = classifier_rbf.predict(vectorizer.transform([NoApos]))
+    TextPrediction = ["positive" if (x == 1) else "negative" for x in TextPrediction]
+    return render_template("TextSentiment.html", data=TextPrediction)
 
 if __name__ == '__main__':
 
     app.run(debug=True)
+    
+    
+    
+    
