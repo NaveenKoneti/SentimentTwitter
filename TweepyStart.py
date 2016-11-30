@@ -20,7 +20,7 @@ auth.set_access_token(access_token, access_secret)
 
 api = tweepy.API(auth)
 
-Data = pd.read_csv("C:\Users\dobi\PycharmProjects\TwitterPractice\Sentiment_Analysis_Dataset_Updated.csv")
+Data = pd.read_csv("Sentiment_Analysis_Dataset_Updated1.csv")
 
 positiveData = Data.loc[Data.Sentiment == 'positive'][:20000]
 negativeData = Data.loc[Data.Sentiment == 'negative'][:20000]
